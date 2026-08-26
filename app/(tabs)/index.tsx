@@ -20,23 +20,26 @@ export default function HomeScreen() {
         <ThemedText type="title" style={styles.mainTitle}>
           StudySpace
         </ThemedText>
+        <ThemedView style={styles.badge}>
+          <ThemedText style={styles.badgeText}>v1.0</ThemedText>
+        </ThemedView>
       </ThemedView>
 
       <ThemedView style={styles.styledCard}>
         <ThemedText type="subtitle" style={styles.cardSubtitle}>
           App Information
         </ThemedText>
-        <ThemedText style={styles.textSpacing}>
+        <ThemedText style={styles.textRow}>
           <ThemedText type="defaultSemiBold">Student Name:</ThemedText> Jake T.
           Calamba
         </ThemedText>
-        <ThemedText style={styles.textSpacing}>
+        <ThemedText style={styles.textRow}>
           <ThemedText type="defaultSemiBold">Course & Section:</ThemedText> BSIT
-          - 3rd Year
+          - 2nd Year
         </ThemedText>
       </ThemedView>
 
-      <ThemedView style={styles.styledCard}>
+      <ThemedView style={[styles.styledCard, styles.accentCard]}>
         <ThemedText type="subtitle" style={styles.cardSubtitle}>
           Short App Idea
         </ThemedText>
@@ -45,6 +48,10 @@ export default function HomeScreen() {
           focus sessions, share notes, and manage collaborative group projects
           seamlessly.
         </ThemedText>
+
+        <ThemedView style={styles.fakeButton}>
+          <ThemedText style={styles.buttonText}>Learn More →</ThemedText>
+        </ThemedView>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -54,19 +61,32 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    justifyContent: "space-between",
+    marginBottom: 12,
     paddingHorizontal: 4,
   },
   mainTitle: {
-    fontSize: 32,
+    fontSize: 34,
+    fontWeight: "bold",
     letterSpacing: 0.5,
+  },
+  badge: {
+    backgroundColor: "#3B82F6",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  badgeText: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "bold",
   },
   styledCard: {
     gap: 8,
     marginBottom: 16,
     padding: 16,
-    borderRadius: 12,
-    backgroundColor: "rgba(255, 255, 255, 0.04)",
+    borderRadius: 14,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
     shadowColor: "#000",
@@ -75,15 +95,35 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
   },
+  accentCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: "#3B82F6",
+  },
   cardSubtitle: {
     marginBottom: 4,
+    fontSize: 18,
   },
-  textSpacing: {
+  textRow: {
     lineHeight: 22,
   },
   bodyText: {
     lineHeight: 22,
     opacity: 0.9,
+    marginBottom: 12,
+  },
+  fakeButton: {
+    backgroundColor: "rgba(59, 130, 246, 0.15)",
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderColor: "rgba(59, 130, 246, 0.3)",
+  },
+  buttonText: {
+    color: "#3B82F6",
+    fontSize: 14,
+    fontWeight: "600",
   },
   reactLogo: {
     height: 178,
