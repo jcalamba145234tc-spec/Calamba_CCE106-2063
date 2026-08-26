@@ -35,7 +35,7 @@ export default function HomeScreen() {
         </ThemedText>
         <ThemedText style={styles.textRow}>
           <ThemedText type="defaultSemiBold">Course & Section:</ThemedText> BSIT
-          - 2nd Year
+          - 3rd Year
         </ThemedText>
       </ThemedView>
 
