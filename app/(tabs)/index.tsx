@@ -1,135 +1,170 @@
-import { Image } from "expo-image";
-import { StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import ParallaxScrollView from "@/components/parallax-scroll-view";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-
-export default function HomeScreen() {
+export default function App() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#1E2229", dark: "#0D0E11" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title" style={styles.mainTitle}>
-          StudySpace
-        </ThemedText>
-        <ThemedView style={styles.badge}>
-          <ThemedText style={styles.badgeText}>v1.0</ThemedText>
-        </ThemedView>
-      </ThemedView>
+    <View style={styles.container}>
+      <Counter initialStep={1} />
+    </View>
+  );
+}
 
-      <ThemedView style={styles.styledCard}>
-        <ThemedText type="subtitle" style={styles.cardSubtitle}>
-          App Information
-        </ThemedText>
-        <ThemedText style={styles.textRow}>
-          <ThemedText type="defaultSemiBold">Student Name:</ThemedText> Jake T.
-          Calamba
-        </ThemedText>
-        <ThemedText style={styles.textRow}>
-          <ThemedText type="defaultSemiBold">Course & Section:</ThemedText> BSIT
-          - 3rd Year
-        </ThemedText>
-      </ThemedView>
+function Counter({ initialStep = 1 }) {
+  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(initialStep);
 
-      <ThemedView style={[styles.styledCard, styles.accentCard]}>
-        <ThemedText type="subtitle" style={styles.cardSubtitle}>
-          Short App Idea
-        </ThemedText>
-        <ThemedText style={styles.bodyText}>
-          StudySpace is a mobile hub designed for college students to organize
-          focus sessions, share notes, and manage collaborative group projects
-          seamlessly.
-        </ThemedText>
+  const increment = () => setCount((prev) => prev + step);
 
-        <ThemedView style={styles.fakeButton}>
-          <ThemedText style={styles.buttonText}>Learn More →</ThemedText>
-        </ThemedView>
-      </ThemedView>
-    </ParallaxScrollView>
+  const decrement = () => {
+    setCount((prev) => (prev - step < 0 ? 0 : prev - step));
+  };
+
+  const reset = () => setCount(0);
+
+  return (
+    <View style={styles.card}>
+      <Text style={styles.title}>Counter App</Text>
+      <Text style={styles.counterValue}>{count}</Text>
+      <Text style={styles.stepText}>Current Step: {step}</Text>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={decrement}>
+          <Text style={styles.buttonText}>-{step}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.resetButton]}
+          onPress={reset}
+        >
+          <Text style={styles.buttonText}>Reset</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={increment}>
+          <Text style={styles.buttonText}>+{step}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.stepConfigContainer}>
+        <Text style={styles.label}>Configure Step Size:</Text>
+        <View style={styles.stepButtons}>
+          {[1, 5, 10].map((val) => (
+            <TouchableOpacity
+              key={val}
+              style={[
+                styles.stepButton,
+                step === val && styles.activeStepButton,
+              ]}
+              onPress={() => setStep(val)}
+            >
+              <Text
+                style={[
+                  styles.stepButtonText,
+                  step === val && styles.activeStepButtonText,
+                ]}
+              >
+                {val}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 12,
-    paddingHorizontal: 4,
+    justifyContent: "center",
   },
-  mainTitle: {
-    fontSize: 34,
-    fontWeight: "bold",
-    letterSpacing: 0.5,
-  },
-  badge: {
-    backgroundColor: "#3B82F6",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  badgeText: {
-    color: "#FFFFFF",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  styledCard: {
-    gap: 8,
-    marginBottom: 16,
-    padding: 16,
-    borderRadius: 14,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+  card: {
+    backgroundColor: "#ffffff",
+    padding: 24,
+    borderRadius: 16,
+    alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    width: "85%",
+    maxWidth: 350,
   },
-  accentCard: {
-    borderLeftWidth: 4,
-    borderLeftColor: "#3B82F6",
+  title: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 16,
   },
-  cardSubtitle: {
-    marginBottom: 4,
-    fontSize: 18,
+  counterValue: {
+    fontSize: 64,
+    fontWeight: "bold",
+    color: "#2f95dc",
+    marginBottom: 8,
   },
-  textRow: {
-    lineHeight: 22,
+  stepText: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 24,
   },
-  bodyText: {
-    lineHeight: 22,
-    opacity: 0.9,
-    marginBottom: 12,
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: 24,
   },
-  fakeButton: {
-    backgroundColor: "rgba(59, 130, 246, 0.15)",
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+  button: {
+    backgroundColor: "#2f95dc",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 8,
-    alignSelf: "flex-start",
-    borderWidth: 1,
-    borderColor: "rgba(59, 130, 246, 0.3)",
+    flex: 1,
+    marginHorizontal: 4,
+    alignItems: "center",
+  },
+  resetButton: {
+    backgroundColor: "#e74c3c",
   },
   buttonText: {
-    color: "#3B82F6",
-    fontSize: 14,
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "600",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  stepConfigContainer: {
+    width: "100%",
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    paddingTop: 16,
+  },
+  label: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 12,
+  },
+  stepButtons: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  stepButton: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 6,
+    marginHorizontal: 4,
+  },
+  activeStepButton: {
+    backgroundColor: "#333",
+    borderColor: "#333",
+  },
+  stepButtonText: {
+    color: "#333",
+    fontWeight: "500",
+  },
+  activeStepButtonText: {
+    color: "#fff",
   },
 });
