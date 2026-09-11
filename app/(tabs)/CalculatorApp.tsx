@@ -27,7 +27,7 @@ export default function App() {
     const n1 = parseFloat(num1);
     const n2 = parseFloat(num2);
 
-   
+    
     if (isNaN(n1) || isNaN(n2)) {
       setError("Please enter valid numbers.");
       return;
