@@ -5,7 +5,7 @@ import { useTheme } from "../_layout";
 
 export default function SettingsScreen() {
   const [notifications, setNotifications] = useState(true);
-  const { darkMode, setDarkMode, colors } = useTheme();
+  const { isDark, toggleDark, colors } = useTheme();
   const router = useRouter();
 
   return (
@@ -28,8 +28,8 @@ export default function SettingsScreen() {
       <View style={[styles.row, { borderBottomColor: colors.border }]}>
         <Text style={[styles.label, { color: colors.text }]}>Dark Mode</Text>
         <Switch
-          value={darkMode}
-          onValueChange={setDarkMode}
+          value={isDark}
+          onValueChange={toggleDark}
           trackColor={{ true: colors.accent }}
         />
       </View>
@@ -37,9 +37,7 @@ export default function SettingsScreen() {
       <Pressable
         style={styles.signOut}
         onPress={() => {
-          if (router.canGoBack()) {
-            router.back();
-          }
+          if (router.canGoBack()) router.back();
         }}
       >
         <Text style={[styles.signOutText, { color: colors.danger }]}>Back</Text>
