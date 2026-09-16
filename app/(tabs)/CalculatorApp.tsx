@@ -11,10 +11,10 @@ import {
 export default function App() {
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<number | null>(null);
   const [error, setError] = useState("");
 
-  const validateAndCalculate = (operation) => {
+  const validateAndCalculate = (operation: 'add' | 'subtract' | 'multiply' | 'divide') => {
     setError("");
     setResult(null);
 
