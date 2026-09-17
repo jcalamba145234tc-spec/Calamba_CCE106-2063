@@ -61,6 +61,7 @@ export default function RootLayout() {
           name="student/[id]"
           options={{ title: "Student Details" }}
         />
+        <Stack.Screen name="lab08" options={{ title: "Attendance List" }} />
       </Stack>
     </ThemeContext.Provider>
   );
