@@ -1,5 +1,7 @@
-import { Stack } from "expo-router";
-import { createContext, useContext, useMemo, useState } from "react";
+import { Stack, usePathname, useRouter } from "expo-router";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { AuthProvider, useAuth } from "../context/auth-context";
 
 const lightColors = {
   background: "#fff",
@@ -45,24 +47,40 @@ export default function RootLayout() {
 
   return (
     <ThemeContext.Provider value={value}>
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: value.colors.card },
-          headerTintColor: value.colors.text,
-          contentStyle: { backgroundColor: value.colors.background },
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="course/[id]"
-          options={{ title: "Course Details" }}
-        />
-        <Stack.Screen
-          name="student/[id]"
-          options={{ title: "Student Details" }}
-        />
-        <Stack.Screen name="lab08" options={{ title: "Attendance List" }} />
-      </Stack>
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
     </ThemeContext.Provider>
+  );
+}
+
+function Navigation() {
+  const { status } = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
+  const { colors } = useTheme();
+
+  useEffect(() => {
+    if (status === "checking") return;
+    if (status === "signedOut" && pathname !== "/login") router.replace("/login");
+    if (status === "signedIn" && (pathname === "/login" || pathname === "/" || pathname === "/(tabs)")) router.replace("/(tabs)/profile");
+  }, [status, pathname, router]);
+
+  if (status === "checking") {
+    return <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.background }}><ActivityIndicator size="large" color={colors.accent} /></View>;
+  }
+
+  if (status === "signedOut") {
+    return <Stack screenOptions={{ headerShown: false }}><Stack.Screen name="login" /></Stack>;
+  }
+
+  return (
+    <Stack initialRouteName="(tabs)" screenOptions={{ headerStyle: { backgroundColor: colors.card }, headerTintColor: colors.text, contentStyle: { backgroundColor: colors.background } }}>
+      <Stack.Screen name="login" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="course/[id]" options={{ title: "Course Details" }} />
+      <Stack.Screen name="student/[id]" options={{ title: "Student Details" }} />
+      <Stack.Screen name="lab08" options={{ title: "Attendance List" }} />
+    </Stack>
   );
 }

@@ -28,7 +28,7 @@ export default function CourseDetailScreen() {
           Course not found
         </Text>
         <Text style={[styles.errorBody, { color: colors.subtext }]}>
-          "{id}" doesn't match any course we know about.
+          &quot;{id}&quot; doesn&apos;t match any course we know about.
         </Text>
         <Pressable
           style={[styles.button, { backgroundColor: colors.accent }]}

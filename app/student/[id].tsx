@@ -23,7 +23,7 @@ export default function StudentDetailScreen() {
           Student record not found
         </Text>
         <Text style={[styles.errorBody, { color: colors.subtext }]}>
-          No record exists for id "{id}".
+          No record exists for id &quot;{id}&quot;.
         </Text>
         <Pressable
           style={[styles.button, { backgroundColor: colors.accent }]}
