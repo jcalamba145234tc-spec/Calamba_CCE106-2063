@@ -1,7 +1,7 @@
 # CCE106 Secure Profile App Lab
 
-**Name:** [Your Name]
-**Section:** [Your Section]
+- **Name:** Jake Tan Calamba
+- **Section:** CCE106-2063
 
 ## Install
 
